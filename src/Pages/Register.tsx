@@ -1,5 +1,5 @@
 // "use client"  // Next.js kullanıyorsan aç
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import { Button } from "../ui/components/Button";
 import { TextField } from "../ui/components/TextField";
@@ -8,7 +8,9 @@ import { useNavigate } from "react-router";
 import { API } from "../utils/API";
 import type { ApiResponse } from "../models/responsetype/ApiResponse";
 import type { ApplicationUserEntity } from "../models/entity/ApplicationUserEntity";
-import { showErrorToast } from "../utils/Toaster";
+import { showErrorToast, showSuccessToast } from "../utils/Toaster";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGgCircle } from "@fortawesome/free-brands-svg-icons";
 
 function RegisterPage() {
   const vantaRef = useRef(null);
@@ -98,12 +100,20 @@ function RegisterPage() {
         await API.post("/auth/register", formData)
       ).data;
 
+      console.log(response.errors);
+
       if (!response.success) {
-        showErrorToast(response.message);
-        setErrorMessages([response.message]);
+        showErrorToast(
+          response.message || "unknown error occured try again later"
+        );
+        setErrorMessages([...response.errors]);
         return;
       }
+
+      showSuccessToast(response.message || "registered successfully");
+      navigate("/login");
     } catch (error) {
+      showErrorToast("unknown error occured try again later");
       console.log(error);
     }
   }
@@ -215,6 +225,21 @@ function RegisterPage() {
           >
             Click here if you already have an account
           </a>
+          <ul>
+            {errorMessages.map((e, i) => {
+              return (
+                <div className="flex flex-row items-center align-middle">
+                  <FontAwesomeIcon
+                    icon={faGgCircle}
+                    className="text-blue-600"
+                  />
+                  <li key={i} className="text-red-700 mx-5  ">
+                    {e}
+                  </li>
+                </div>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </div>
