@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import { RegisterPage } from "./Pages/Register";
 import { LoginPage } from "./Pages/Login";
 import { HomePage } from "./Pages/Home";
+import { CreatePenPage } from "./Pages/CreatePen";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,12 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <HomePage />,
+    children: [
+      {
+        path: "create-pen",
+        element: <CreatePenPage />,
+      },
+    ],
   },
 ]);
 

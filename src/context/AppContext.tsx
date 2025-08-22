@@ -6,6 +6,8 @@ type AppContextType = {
   setUser: (user: string | null) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
+  isLoggedIn: boolean;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
 };
 
 // default empty context (will be replaced by Provider)
@@ -14,9 +16,19 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   return (
-    <AppContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
+    <AppContext.Provider
+      value={{
+        user,
+        setUser,
+        isLoading,
+        setIsLoading,
+        isLoggedIn,
+        setIsLoggedIn,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

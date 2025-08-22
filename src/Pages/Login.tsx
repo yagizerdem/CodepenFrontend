@@ -1,4 +1,4 @@
-import { useNavigate, useNavigation } from "react-router";
+import { useNavigate } from "react-router";
 import type { LoginDTO } from "../models/dto/LogInDTO";
 import { Button } from "../ui/components/Button";
 import { TextField } from "../ui/components/TextField";
@@ -19,7 +19,7 @@ function LoginPage() {
   });
   const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
-  const { setIsLoading } = useAppContext();
+  const { setIsLoading, setIsLoggedIn } = useAppContext();
 
   useEffect(() => {
     // Function to load scripts from CDN
@@ -104,6 +104,7 @@ function LoginPage() {
       }
 
       showSuccessToast(apiResponse.message || "login successful");
+      setIsLoggedIn(true);
       navigate("/home");
     } catch (error) {
       console.log(error);
