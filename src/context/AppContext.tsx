@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
+import type { ApplicationUserEntity } from "../models/entity/ApplicationUserEntity";
 
 type AppContextType = {
-  user: string | null;
-  setUser: (user: string | null) => void;
+  profile: ApplicationUserEntity | null;
+  setProfile: (profile: ApplicationUserEntity | null) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
   isLoggedIn: boolean;
@@ -14,15 +15,15 @@ type AppContextType = {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<string | null>(null);
+  const [profile, setProfile] = useState<ApplicationUserEntity | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   return (
     <AppContext.Provider
       value={{
-        user,
-        setUser,
+        profile,
+        setProfile,
         isLoading,
         setIsLoading,
         isLoggedIn,

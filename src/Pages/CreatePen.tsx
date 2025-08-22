@@ -1,7 +1,17 @@
-import useEnsureLoggedIn from "../hook/ensureLoggedIn";
+import { useEffect } from "react";
+import { useEnsureLoggedIn } from "../hook/ensureLoggedIn";
+import { useAppContext } from "../context/AppContext";
 
 function CreatePenPage() {
-  useEnsureLoggedIn({ showErrorMessage: true });
+  const { setIsLoading } = useAppContext();
+
+  const { isLoading: loggedInLoader } = useEnsureLoggedIn({
+    showErrorMessage: true,
+  });
+
+  useEffect(() => {
+    setIsLoading(loggedInLoader);
+  }, [loggedInLoader, setIsLoading]);
 
   return (
     <div className="w-full h-full bg-red-400">
