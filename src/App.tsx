@@ -16,7 +16,7 @@ function App() {
         </div>
       )}
       <div className="w-screen h-screen  overflow-hidden">
-        <RouterProvider router={router} />,
+        <RouterProvider router={router} />
       </div>
     </Fragment>
   );

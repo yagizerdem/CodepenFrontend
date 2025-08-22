@@ -1,9 +1,14 @@
 import { useNavigate, useNavigation } from "react-router";
 import type { LoginDTO } from "../models/dto/LogInDTO";
-import type { RegisterDTO } from "../models/dto/RegisterDTO";
 import { Button } from "../ui/components/Button";
 import { TextField } from "../ui/components/TextField";
 import { useEffect, useRef, useState } from "react";
+import { showErrorToast, showSuccessToast } from "../utils/Toaster";
+import { useAppContext } from "../context/AppContext";
+import type { ApiResponse } from "../models/responsetype/ApiResponse";
+import { API } from "../utils/API";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGgCircle } from "@fortawesome/free-brands-svg-icons";
 
 function LoginPage() {
   const vantaRef = useRef(null);
@@ -13,6 +18,8 @@ function LoginPage() {
     Password: "",
   });
   const navigate = useNavigate();
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const { setIsLoading } = useAppContext();
 
   useEffect(() => {
     // Function to load scripts from CDN
@@ -82,11 +89,27 @@ function LoginPage() {
     };
   }, []);
 
-  async function hanldeLogin() {
+  async function handleLogin() {
     try {
-      console.log(formData);
+      setErrorMessages([]); // clear error messages
+      setIsLoading(true);
+      const apiResponse: ApiResponse<LoginDTO> = (
+        await API.post("/auth/login", formData)
+      ).data;
+
+      if (!apiResponse.success) {
+        showErrorToast(apiResponse.message || "login failed");
+        setErrorMessages([...apiResponse.errors]);
+        return;
+      }
+
+      showSuccessToast(apiResponse.message || "login successful");
+      navigate("/home");
     } catch (error) {
       console.log(error);
+      showErrorToast("unknown error occured try again later");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -149,11 +172,27 @@ function LoginPage() {
             size="large"
             onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
               event.preventDefault();
-              hanldeLogin();
+              handleLogin();
             }}
           >
             Login to account
           </Button>
+
+          <ul>
+            {errorMessages.map((e, i) => {
+              return (
+                <div className="flex flex-row items-center align-middle">
+                  <FontAwesomeIcon
+                    icon={faGgCircle}
+                    className="text-blue-600"
+                  />
+                  <li key={i} className="text-red-700 mx-5  ">
+                    {e}
+                  </li>
+                </div>
+              );
+            })}
+          </ul>
 
           <a
             className="text-blue-700 cursor-pointer"
