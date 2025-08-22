@@ -111,22 +111,27 @@ function RegisterPage() {
   return (
     <div
       ref={vantaRef}
-      className="flex w-screen h-screen justify-center items-center overflow-hidden"
+      className="flex w-screen h-screen justify-center items-center align-middle"
     >
-      <div className="flex w-full max-w-[490px] relative flex-col items-center gap-8 rounded-md border border-solid p-8">
-        <div className="flex w-full h-full absolute z-1 bg-white opacity-40 top-0 left-0"></div>
+      <div
+        className="flex w-full max-w-md mx-auto relative flex-col items-center gap-8 
+                p-6 md:p-8 rounded-xl 
+                max-h-screen overflow-y-auto"
+      >
+        <div className="absolute inset-0 bg-white opacity-40 rounded-xl z-0"></div>
+
         <div className="flex w-full flex-col items-center gap-2 relative z-10">
-          <span className="text-heading-2 font-heading-2 text-default-font">
+          <span className="text-xl md:text-2xl font-bold text-gray-800 text-center">
             Create your account
           </span>
-          <span className="text-body font-body text-gray-700">
+          <span className="text-sm md:text-base text-gray-600 text-center">
             Fill in your details to get started
           </span>
         </div>
-        <div className="flex w-full flex-col items-start gap-6 relative z-10">
-          <div className="flex w-full items-start gap-4">
+        <div className="flex w-full flex-col items-start gap-4 md:gap-6 relative z-10">
+          <div className="flex w-full flex-col md:flex-row items-start gap-4">
             <TextField
-              className="h-auto grow shrink-0 basis-0"
+              className="h-auto w-full md:grow md:shrink-0 md:basis-0"
               label="First name"
               helpText=""
             >
@@ -139,7 +144,7 @@ function RegisterPage() {
               />
             </TextField>
             <TextField
-              className="h-auto grow shrink-0 basis-0"
+              className="h-auto w-full md:grow md:shrink-0 md:basis-0"
               label="Last name"
               helpText=""
             >
@@ -203,12 +208,12 @@ function RegisterPage() {
             Create account
           </Button>
           <a
-            className="text-blue-700 cursor-pointer"
+            className="text-blue-600 hover:text-blue-800 cursor-pointer text-sm md:text-base self-center"
             onMouseUp={() => {
               navigate("/login");
             }}
           >
-            clikc here if you already have an account
+            Click here if you already have an account
           </a>
         </div>
       </div>

@@ -101,13 +101,18 @@ function LoginPage() {
         justifyContent: "center",
       }}
     >
-      <div className="flex w-full max-w-[490px] relative flex-col items-center gap-8 rounded-md border border-solid p-8 ">
-        <div className="flex w-full h-full absolute z-1 bg-white opacity-40 top-0 left-0"></div>
+      <div
+        className="flex w-full max-w-md mx-auto relative flex-col items-center gap-8 
+                p-6 md:p-8 rounded-xl 
+                max-h-screen overflow-y-auto"
+      >
+        <div className="absolute inset-0 bg-white opacity-40 rounded-xl z-0"></div>
+
         <div className="flex w-full flex-col items-center gap-2 relative z-10">
-          <span className="text-heading-2 font-heading-2 text-default-font">
-            Login to account
+          <span className="text-xl md:text-2xl font-bold text-gray-800 text-center">
+            Login your account
           </span>
-          <span className="text-body font-body text-gray-700">
+          <span className="text-sm md:text-base text-gray-600 text-center">
             Fill in your details to get started
           </span>
         </div>
