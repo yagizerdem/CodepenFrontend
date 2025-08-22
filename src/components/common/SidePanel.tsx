@@ -10,9 +10,39 @@ import { FeatherLogOut } from "@subframe/core";
 import { useNavigate } from "react-router";
 import { FeatherHome } from "@subframe/core";
 import { FeatherEdit } from "@subframe/core";
+import { useAppContext } from "../../context/AppContext";
+import { showErrorToast } from "../../utils/Toaster";
+import { API } from "../../utils/API";
+import type { ApiResponse } from "../../models/responsetype/ApiResponse";
 
 function Sidepanel() {
   const navigation = useNavigate();
+  const { setIsLoading, setProfile, setIsLoggedIn } = useAppContext();
+
+  async function handleLogout() {
+    try {
+      setIsLoading(true);
+
+      const apiResponse: ApiResponse<unknown> = (await API.post("/auth/logout"))
+        .data;
+
+      if (!apiResponse.success) {
+        showErrorToast(apiResponse.message || "Logout failed");
+        return;
+      }
+
+      navigation("/login");
+
+      // clear state
+      setProfile(null);
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.log(error);
+      showErrorToast("Unknown error occurred");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <div className="flex w-64 h-full flex-none flex-col items-start gap-6 self-stretch border-r border-solid border-neutral-border bg-default-background px-4 py-6">
@@ -102,7 +132,10 @@ function Sidepanel() {
         className="h-8 w-full flex-none"
         variant="neutral-tertiary"
         icon={<FeatherLogOut />}
-        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {}}
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+          event.preventDefault();
+          handleLogout();
+        }}
       >
         Log out
       </Button>
