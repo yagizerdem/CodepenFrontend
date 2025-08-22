@@ -11,6 +11,7 @@ import type { ApplicationUserEntity } from "../models/entity/ApplicationUserEnti
 import { showErrorToast, showSuccessToast } from "../utils/Toaster";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGgCircle } from "@fortawesome/free-brands-svg-icons";
+import { useAppContext } from "../context/AppContext";
 
 function RegisterPage() {
   const vantaRef = useRef(null);
@@ -24,6 +25,7 @@ function RegisterPage() {
   });
   const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const { setIsLoading } = useAppContext();
 
   useEffect(() => {
     // Function to load scripts from CDN
@@ -95,6 +97,7 @@ function RegisterPage() {
 
   async function handleRegister() {
     try {
+      setIsLoading(true);
       setErrorMessages([]); // clear error messages
       const response: ApiResponse<ApplicationUserEntity> = (
         await API.post("/auth/register", formData)
@@ -115,6 +118,8 @@ function RegisterPage() {
     } catch (error) {
       showErrorToast("unknown error occured try again later");
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
