@@ -4,6 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/components/Button";
 import { TextField } from "../ui/components/TextField";
 import type { RegisterDTO } from "../models/dto/RegisterDTO";
+import { useNavigate } from "react-router";
+import { API } from "../utils/API";
+import type { ApiResponse } from "../models/responsetype/ApiResponse";
+import type { ApplicationUserEntity } from "../models/entity/ApplicationUserEntity";
 
 function RegisterPage() {
   const vantaRef = useRef(null);
@@ -15,6 +19,7 @@ function RegisterPage() {
     Email: "",
     Password: "",
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Function to load scripts from CDN
@@ -86,7 +91,9 @@ function RegisterPage() {
 
   async function handleRegister() {
     try {
-      console.log(formData);
+      const response: ApiResponse<ApplicationUserEntity> = (
+        await API.post("/auth/register", formData)
+      ).data;
     } catch (error) {
       console.log(error);
     }
@@ -186,6 +193,14 @@ function RegisterPage() {
           >
             Create account
           </Button>
+          <a
+            className="text-blue-700 cursor-pointer"
+            onMouseUp={() => {
+              navigate("/login");
+            }}
+          >
+            clikc here if you already have an account
+          </a>
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { useNavigate, useNavigation } from "react-router";
 import type { LoginDTO } from "../models/dto/LogInDTO";
 import type { RegisterDTO } from "../models/dto/RegisterDTO";
 import { Button } from "../ui/components/Button";
@@ -11,6 +12,7 @@ function LoginPage() {
     Email: "",
     Password: "",
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Function to load scripts from CDN
@@ -103,7 +105,7 @@ function LoginPage() {
         <div className="flex w-full h-full absolute z-1 bg-white opacity-40 top-0 left-0"></div>
         <div className="flex w-full flex-col items-center gap-2 relative z-10">
           <span className="text-heading-2 font-heading-2 text-default-font">
-            Create your account
+            Login to account
           </span>
           <span className="text-body font-body text-gray-700">
             Fill in your details to get started
@@ -145,8 +147,16 @@ function LoginPage() {
               hanldeLogin();
             }}
           >
-            Create account
+            Login to account
           </Button>
+          <a
+            className="text-blue-700 cursor-pointer"
+            onMouseUp={() => {
+              navigate("/register");
+            }}
+          >
+            clikc here if dont have account
+          </a>
         </div>
       </div>
     </div>
