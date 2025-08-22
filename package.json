@@ -12,8 +12,10 @@
   "dependencies": {
     "@subframe/core": "^1.145.0",
     "@tailwindcss/vite": "^4.1.12",
+    "@types/react-router": "^5.1.20",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-router": "^7.8.1",
     "tailwindcss": "^4.1.12",
     "three": "^0.179.1",
     "vanta": "^0.5.24"

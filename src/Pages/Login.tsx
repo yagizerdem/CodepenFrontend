@@ -1,17 +1,13 @@
-// "use client"  // Next.js kullanıyorsan aç
-import { useEffect, useRef, useState } from "react";
-
+import type { LoginDTO } from "../models/dto/LogInDTO";
+import type { RegisterDTO } from "../models/dto/RegisterDTO";
 import { Button } from "../ui/components/Button";
 import { TextField } from "../ui/components/TextField";
-import type { RegisterDTO } from "../models/dto/RegisterDTO";
+import { useEffect, useRef, useState } from "react";
 
-function RegisterPage() {
+function LoginPage() {
   const vantaRef = useRef(null);
   const [vantaEffect, setVantaEffect] = useState(null);
-  const [formData, setFormData] = useState<RegisterDTO>({
-    FirstName: "",
-    LastName: "",
-    UserName: "",
+  const [formData, setFormData] = useState<LoginDTO>({
     Email: "",
     Password: "",
   });
@@ -84,7 +80,7 @@ function RegisterPage() {
     };
   }, []);
 
-  async function handleRegister() {
+  async function hanldeLogin() {
     try {
       console.log(formData);
     } catch (error) {
@@ -95,9 +91,15 @@ function RegisterPage() {
   return (
     <div
       ref={vantaRef}
-      className="flex w-screen h-screen justify-center items-center overflow-hidden"
+      style={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
-      <div className="flex w-full max-w-[490px] relative flex-col items-center gap-8 rounded-md border border-solid p-8">
+      <div className="flex w-full max-w-[490px] relative flex-col items-center gap-8 rounded-md border border-solid p-8 ">
         <div className="flex w-full h-full absolute z-1 bg-white opacity-40 top-0 left-0"></div>
         <div className="flex w-full flex-col items-center gap-2 relative z-10">
           <span className="text-heading-2 font-heading-2 text-default-font">
@@ -108,47 +110,6 @@ function RegisterPage() {
           </span>
         </div>
         <div className="flex w-full flex-col items-start gap-6 relative z-10">
-          <div className="flex w-full items-start gap-4">
-            <TextField
-              className="h-auto grow shrink-0 basis-0"
-              label="First name"
-              helpText=""
-            >
-              <TextField.Input
-                placeholder="Enter your first name"
-                value={formData.FirstName}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setFormData({ ...formData, FirstName: event.target.value });
-                }}
-              />
-            </TextField>
-            <TextField
-              className="h-auto grow shrink-0 basis-0"
-              label="Last name"
-              helpText=""
-            >
-              <TextField.Input
-                placeholder="Enter your last name"
-                value={formData.LastName}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setFormData({ ...formData, LastName: event.target.value });
-                }}
-              />
-            </TextField>
-          </div>
-          <TextField
-            className="h-auto w-full flex-none"
-            label="Username"
-            helpText=""
-          >
-            <TextField.Input
-              placeholder="Choose a username"
-              value={formData.UserName}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setFormData({ ...formData, UserName: event.target.value });
-              }}
-            />
-          </TextField>
           <TextField
             className="h-auto w-full flex-none"
             label="Email"
@@ -181,7 +142,7 @@ function RegisterPage() {
             size="large"
             onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
               event.preventDefault();
-              handleRegister();
+              hanldeLogin();
             }}
           >
             Create account
@@ -191,5 +152,4 @@ function RegisterPage() {
     </div>
   );
 }
-
-export { RegisterPage };
+export { LoginPage };
