@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { API } from "../utils/API";
 import type { ApiResponse } from "../models/responsetype/ApiResponse";
 import type { ApplicationUserEntity } from "../models/entity/ApplicationUserEntity";
+import { showErrorToast } from "../utils/Toaster";
 
 function RegisterPage() {
   const vantaRef = useRef(null);
@@ -20,6 +21,7 @@ function RegisterPage() {
     Password: "",
   });
   const navigate = useNavigate();
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   useEffect(() => {
     // Function to load scripts from CDN
@@ -91,9 +93,16 @@ function RegisterPage() {
 
   async function handleRegister() {
     try {
+      setErrorMessages([]); // clear error messages
       const response: ApiResponse<ApplicationUserEntity> = (
         await API.post("/auth/register", formData)
       ).data;
+
+      if (!response.success) {
+        showErrorToast(response.message);
+        setErrorMessages([response.message]);
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
