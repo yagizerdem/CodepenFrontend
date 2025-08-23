@@ -3,6 +3,7 @@ import { RegisterPage } from "./Pages/Register";
 import { LoginPage } from "./Pages/Login";
 import { HomePage } from "./Pages/Home";
 import { CreatePenPage } from "./Pages/CreatePen";
+import { SearchProfilePage } from "./Pages/SearchProfile";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "create-pen",
         element: <CreatePenPage />,
+      },
+      {
+        path: "search-profile",
+        element: <SearchProfilePage />,
       },
     ],
   },
