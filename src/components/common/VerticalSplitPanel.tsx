@@ -78,7 +78,7 @@ export const VerticalSplitPanel: React.FC<VerticalSplitPanelProps> = ({
   }, []);
 
   return (
-    <div className="vertical-split" ref={containerRef}>
+    <div className="vertical-split " ref={containerRef}>
       {showOverlay && <div className="v-drag-overlay" />}
       {sections.map((section, index) => (
         <Fragment key={index}>

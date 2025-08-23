@@ -24,9 +24,9 @@ function HomePage() {
   }, [loggedInLoader, profileLoader, setIsLoading]);
 
   return (
-    <div className="w-screen h-screen  flex flex-row flex-1">
+    <div className="w-screen h-screen  flex flex-row flex-1 ">
       <Sidepanel />
-      <div className="flex-1 flex-grow ">
+      <div className="flex-1">
         {isHome && <HomePageContent />}
         {!isHome && <Outlet />}
       </div>

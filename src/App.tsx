@@ -15,9 +15,7 @@ function App() {
           <Spinner />
         </div>
       )}
-      <div className="w-screen h-screen  overflow-hidden">
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
     </Fragment>
   );
 }
