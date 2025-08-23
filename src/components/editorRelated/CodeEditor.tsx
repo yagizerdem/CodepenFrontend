@@ -4,7 +4,12 @@ import { VerticalSplitPanel } from "../common/VerticalSplitPanel";
 import { CssEditor, HtmlEditor, JavascriptEditor } from "./Editors";
 import "./previewIframe.css";
 import { useDebounce } from "../../hook/useDebounce";
-import { FeatherCircleStop, FeatherRefreshCw } from "@subframe/core";
+import {
+  FeatherCircleStop,
+  FeatherDownload,
+  FeatherRefreshCw,
+  FeatherUpload,
+} from "@subframe/core";
 import { Button } from "../../ui";
 import Popup from "reactjs-popup";
 
@@ -169,8 +174,63 @@ function CodeEditor() {
     setFrameKey(killedKey);
     setOutputValue("");
   }
+  function exportCode() {
+    // HTML file
+    const htmlBlob = new Blob([htmlValue], { type: "text/html" });
+    const htmlUrl = URL.createObjectURL(htmlBlob);
+    downloadFile(htmlUrl, "index.html");
 
-  console.log(openLoadPopup);
+    // CSS file
+    const cssBlob = new Blob([cssValue], { type: "text/css" });
+    const cssUrl = URL.createObjectURL(cssBlob);
+    downloadFile(cssUrl, "style.css");
+
+    // JS file
+    const jsBlob = new Blob([jsValue], { type: "application/javascript" });
+    const jsUrl = URL.createObjectURL(jsBlob);
+    downloadFile(jsUrl, "script.js");
+  }
+  function downloadFile(url: string, filename: string) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function importCode() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.multiple = true;
+    input.accept = ".html,.css,.js"; // sadece html, css, js dosyaları
+
+    input.onchange = async (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      if (!target.files) return;
+
+      const files = Array.from(target.files);
+
+      for (const file of files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const content = e.target?.result as string;
+
+          if (file.name.endsWith(".html")) {
+            setHtmlValue(content);
+          } else if (file.name.endsWith(".css")) {
+            setCssValue(content);
+          } else if (file.name.endsWith(".js")) {
+            setJsValue(content);
+          }
+        };
+        reader.readAsText(file);
+      }
+    };
+
+    input.click();
+  }
 
   return (
     <Fragment>
@@ -264,6 +324,26 @@ function CodeEditor() {
           </Button>
           <Button icon={<FeatherCircleStop />} onClick={stopPreview}>
             Stop
+          </Button>
+          <Button
+            variant="brand-secondary"
+            icon={<FeatherUpload />}
+            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+              event.preventDefault();
+              importCode();
+            }}
+          >
+            Import
+          </Button>
+          <Button
+            variant="brand-secondary"
+            icon={<FeatherDownload />}
+            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+              event.preventDefault();
+              exportCode();
+            }}
+          >
+            Export
           </Button>
         </div>
 
