@@ -161,7 +161,7 @@ function LoginPage() {
           >
             <TextField.Input
               type="password"
-              placeholder="Create a password"
+              placeholder="Enter password"
               value={formData.Password}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setFormData({ ...formData, Password: event.target.value });

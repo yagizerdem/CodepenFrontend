@@ -1,0 +1,24 @@
+.vertical-split {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  width: 100%;
+  height: 100%; /* fill parent */
+  overflow: hidden;
+}
+
+.vertical-split-section {
+  flex: 1;
+  min-height: 100px;
+  width: 100%;
+  overflow: auto;
+}
+
+.v-separator {
+  height: 10px;
+  background-color: #ccc;
+  cursor: row-resize;
+}
+
+.v-separator:hover {
+  background-color: #888;
+}

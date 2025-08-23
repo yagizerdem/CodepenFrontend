@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useEnsureLoggedIn } from "../hook/ensureLoggedIn";
 import { useAppContext } from "../context/AppContext";
+import { HorizontalSplitPanel } from "../components/common/HorizontalSplitPanel";
+import { VerticalSplitPanel } from "../components/common/VerticalSplitPanel";
 
 function CreatePenPage() {
   const { setIsLoading } = useAppContext();
@@ -15,7 +17,14 @@ function CreatePenPage() {
 
   return (
     <div className="w-full h-full bg-red-400">
-      <div>create pen</div>
+      <VerticalSplitPanel
+        sections={[
+          <div>Top Panel</div>,
+          <HorizontalSplitPanel
+            sections={[<div>Html</div>, <div>CSS</div>, <div>JavaScript</div>]}
+          />,
+        ]}
+      />
     </div>
   );
 }

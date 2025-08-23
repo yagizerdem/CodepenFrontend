@@ -28,8 +28,6 @@ function useEnsureLoggedIn({
           await API.get("/client/is-loggedin")
         ).data;
 
-        console.log(response);
-
         if (!response.success) {
           if (showErrorMessage)
             showErrorToast(response.message || "Unknown error occurred");

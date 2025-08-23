@@ -1,0 +1,24 @@
+.split-panel {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%; /* Make SplitPanel fill its parent */
+  overflow: hidden;
+}
+
+.split-panel-section {
+  flex: 1;
+  min-width: 100px;
+  height: 100%; /* Make each section fill vertically */
+  overflow: auto;
+}
+
+.separator {
+  width: 13px;
+  background-color: #ccc;
+  cursor: col-resize;
+}
+
+.separator:hover {
+  background-color: #888;
+}

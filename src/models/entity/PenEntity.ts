@@ -11,11 +11,11 @@ export interface PenEntity extends BaseEntity {
   Title: string;
   Description?: string;
 
-  AuthorId?: string;
-  Author: ApplicationUserEntity;
-  Version: number;
+  authorId?: string;
+  author: ApplicationUserEntity;
+  version: number;
 
-  OldVersions: OldPenVersionsEntity[];
-  Likes: PenLikeEntity[];
-  Comments: PenCommentEntity[];
+  oldVersions: OldPenVersionsEntity[];
+  likes: PenLikeEntity[];
+  comments: PenCommentEntity[];
 }

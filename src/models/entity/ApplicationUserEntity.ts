@@ -6,38 +6,38 @@ import type { FollowRequest } from "./FollowRequest";
 import type { RelationEntity } from "./RelationEntity";
 
 export interface ApplicationUserEntity {
-  Id: string; // IdentityUser primary key (string GUID)
-  UserName?: string;
-  NormalizedUserName?: string;
-  Email?: string;
-  NormalizedEmail?: string;
-  EmailConfirmed: boolean;
-  PasswordHash?: string;
-  SecurityStamp?: string;
-  ConcurrencyStamp?: string;
-  PhoneNumber?: string;
-  PhoneNumberConfirmed: boolean;
-  TwoFactorEnabled: boolean;
-  LockoutEnd?: string;
-  LockoutEnabled: boolean;
-  AccessFailedCount: number;
+  id: string; // IdentityUser primary key (string GUID)
+  userName?: string;
+  normalizedUserName?: string;
+  email?: string;
+  normalizedEmail?: string;
+  emailConfirmed: boolean;
+  passwordHash?: string;
+  securityStamp?: string;
+  concurrencyStamp?: string;
+  phoneNumber?: string;
+  phoneNumberConfirmed: boolean;
+  twoFactorEnabled: boolean;
+  lockoutEnd?: string;
+  lockoutEnabled: boolean;
+  accessFailedCount: number;
 
-  FirstName: string;
-  LastName: string;
-  FullName: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
 
-  ProfilePictureId?: number;
-  ProfilePicture?: MediaWrapper;
+  profilePictureId?: number;
+  profilePicture?: MediaWrapper;
 
-  CreatedAt: string;
-  UpdatedAt: string;
-  Status: string;
+  createdAt: string;
+  updatedAt: string;
+  status: string;
 
-  Pens: PenEntity[];
-  Likes: PenLikeEntity[];
-  Comments: PenCommentEntity[];
-  SentFollowRequests: FollowRequest[];
-  ReceivedFollowRequests: FollowRequest[];
-  Followers: RelationEntity[];
-  Following: RelationEntity[];
+  pens: PenEntity[];
+  likes: PenLikeEntity[];
+  comments: PenCommentEntity[];
+  sentFollowRequests: FollowRequest[];
+  receivedFollowRequests: FollowRequest[];
+  followers: RelationEntity[];
+  following: RelationEntity[];
 }

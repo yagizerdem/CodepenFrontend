@@ -23,8 +23,6 @@ function HomePage() {
     setIsLoading(_isLoading);
   }, [loggedInLoader, profileLoader, setIsLoading]);
 
-  console.log(profile);
-
   return (
     <div className="w-screen h-screen  flex flex-row flex-1">
       <Sidepanel />

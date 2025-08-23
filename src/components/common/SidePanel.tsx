@@ -14,10 +14,11 @@ import { useAppContext } from "../../context/AppContext";
 import { showErrorToast } from "../../utils/Toaster";
 import { API } from "../../utils/API";
 import type { ApiResponse } from "../../models/responsetype/ApiResponse";
+import ProfileImageContainer from "./ProfileImageContainer";
 
 function Sidepanel() {
   const navigation = useNavigate();
-  const { setIsLoading, setProfile, setIsLoggedIn } = useAppContext();
+  const { setIsLoading, setProfile, setIsLoggedIn, profile } = useAppContext();
 
   async function handleLogout() {
     try {
@@ -47,18 +48,27 @@ function Sidepanel() {
   return (
     <div className="flex w-64 h-full flex-none flex-col items-start gap-6 self-stretch border-r border-solid border-neutral-border bg-default-background px-4 py-6">
       <div className="flex w-full items-center gap-4 border-b border-solid border-neutral-border pb-6">
-        <Avatar
-          size="large"
-          image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-        >
-          J
-        </Avatar>
+        <ProfileImageContainer
+          customStyle={{
+            width: "65px",
+            height: "65px",
+            borderRadius: "50%",
+            overflow: "hidden",
+          }}
+          profileImagePath={`${
+            profile?.id
+              ? import.meta.env.VITE_API_BASE_URL
+              : "/default-profile.png"
+          }/client/get-profile-image/${profile?.id}`}
+          expandOnClick={true}
+        />
+
         <div className="flex grow shrink-0 basis-0 flex-col items-start">
           <span className="text-body-bold font-body-bold text-default-font">
-            John Smith
+            {profile?.firstName}
           </span>
           <span className="text-caption font-caption text-subtext-color">
-            @johnsmith
+            @{profile?.userName}
           </span>
         </div>
       </div>
