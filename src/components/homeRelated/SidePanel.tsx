@@ -105,7 +105,9 @@ function Sidepanel() {
           className="h-8 w-full flex-none"
           variant="neutral-tertiary"
           icon={<FeatherUsers />}
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {}}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            navigation("/home/search-profile");
+          }}
         >
           Search Users
         </Button>
