@@ -1,24 +1,42 @@
 .vertical-split {
   display: flex;
-  flex-direction: column; /* stack vertically */
+  flex-direction: column;
   width: 100%;
-  height: 100%; /* fill parent */
+  height: 100%;
   overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .vertical-split-section {
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 100px;
   width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+.vertical-scroll {
+  flex: 1 1 auto;
   overflow: auto;
+  min-height: 0;
 }
 
 .v-separator {
   height: 10px;
   background-color: #ccc;
   cursor: row-resize;
+  user-select: none;
+  touch-action: none;
 }
 
 .v-separator:hover {
   background-color: #888;
+}
+
+.v-drag-overlay {
+  position: absolute;
+  inset: 0;
+  cursor: row-resize;
+  z-index: 9999;
 }

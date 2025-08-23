@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import { Sidepanel } from "../components/common/SidePanel";
+import { Sidepanel } from "../components/homeRelated/SidePanel";
 import { useLocation } from "react-router";
 import { useEnsureLoggedIn } from "../hook/ensureLoggedIn";
 import { useEnsureProfileFetched } from "../hook/ensureProfileFetched";

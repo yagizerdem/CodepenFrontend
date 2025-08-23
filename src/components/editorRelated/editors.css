@@ -1,0 +1,19 @@
+.editorContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* take all space */
+  overflow: hidden;
+}
+
+.editorTitle {
+  padding: 4px 8px;
+  background: #222;
+  color: #fff;
+  font-size: 12px;
+}
+
+.ace_editor {
+  flex: 1 !important; /* grow */
+  width: 100% !important;
+  height: 100% !important; /* fill cell */
+}

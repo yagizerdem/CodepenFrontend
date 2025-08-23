@@ -14,7 +14,7 @@ import { useAppContext } from "../../context/AppContext";
 import { showErrorToast } from "../../utils/Toaster";
 import { API } from "../../utils/API";
 import type { ApiResponse } from "../../models/responsetype/ApiResponse";
-import ProfileImageContainer from "./ProfileImageContainer";
+import ProfileImageContainer from "../common/ProfileImageContainer";
 
 function Sidepanel() {
   const navigation = useNavigate();

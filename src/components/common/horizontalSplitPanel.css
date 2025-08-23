@@ -9,8 +9,9 @@
 .split-panel-section {
   flex: 1;
   min-width: 100px;
-  height: 100%; /* Make each section fill vertically */
-  overflow: auto;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
 }
 
 .separator {
