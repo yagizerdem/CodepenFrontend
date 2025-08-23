@@ -8,12 +8,21 @@ import {
   FeatherCircleStop,
   FeatherDownload,
   FeatherRefreshCw,
+  FeatherSave,
   FeatherUpload,
+  FeatherX,
 } from "@subframe/core";
 import { Button } from "../../ui";
 import Popup from "reactjs-popup";
+import { useAppContext } from "../../context/AppContext";
+import type { ApiResponse } from "../../models/responsetype/ApiResponse";
+import type { CreatePenDTO } from "../../models/dto/CreatePenDTO";
+import type { PenEntity } from "../../models/entity/PenEntity";
+import { API } from "../../utils/API";
+import { showErrorToast, showSuccessToast } from "../../utils/Toaster";
 
 function CodeEditor() {
+  const { setIsLoading } = useAppContext();
   const [htmlValue, setHtmlValue] = useState("");
   const [jsValue, setJsValue] = useState("");
   const [cssValue, setCssValue] = useState("");
@@ -30,6 +39,13 @@ function CodeEditor() {
   const [hasUserEdited, setHasUserEdited] = useState(false);
 
   const [openLoadPopup, setOpenLoadPopup] = useState(false);
+
+  const [clearCodePopup, setClearCodePopup] = useState(false);
+
+  const [savePenPopup, setSavePenPopup] = useState(false);
+
+  const [penTitle, setPenTitle] = useState("");
+  const [penDescription, setPenDescription] = useState("");
 
   useEffect(() => {
     runPreview(debouncedHtml, debouncedCss, debouncedJs);
@@ -232,6 +248,51 @@ function CodeEditor() {
     input.click();
   }
 
+  function clearCode() {
+    setHtmlValue("");
+    setCssValue("");
+    setJsValue("");
+
+    // clear local storage
+    localStorage.removeItem("createpen-html");
+    localStorage.removeItem("createpen-css");
+    localStorage.removeItem("createpen-js");
+
+    setClearCodePopup(false);
+  }
+
+  async function savePen() {
+    try {
+      setIsLoading(true);
+      const payload: CreatePenDTO = {
+        html: htmlValue,
+        css: cssValue,
+        js: jsValue,
+        title: penTitle,
+        description: penDescription,
+      };
+
+      const apiResponse: ApiResponse<PenEntity> = (
+        await API.post("/pen/create", payload)
+      ).data;
+
+      if (!apiResponse.success) {
+        showErrorToast(apiResponse.message || "unknown error ");
+        return;
+      }
+
+      showSuccessToast(apiResponse.message || "Pen saved successfully!");
+      // clear local storage
+      localStorage.removeItem("createpen-html");
+      localStorage.removeItem("createpen-css");
+      localStorage.removeItem("createpen-js");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <Fragment>
       <Popup
@@ -316,9 +377,177 @@ function CodeEditor() {
         </div>
       </Popup>
 
+      <Popup
+        open={clearCodePopup}
+        onClose={() => setClearCodePopup(false)}
+        modal
+        nested
+        lockScroll
+        contentStyle={{
+          background: "#1e1e1e",
+          color: "#f1f1f1",
+          borderRadius: "0.75rem",
+          padding: "1.5rem",
+          boxShadow: "0 8px 25px rgba(0,0,0,0.6)",
+          textAlign: "center",
+        }}
+        overlayStyle={{
+          background: "rgba(0,0,0,0.7)",
+          backdropFilter: "blur(2px)",
+        }}
+      >
+        <div>
+          <h3
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: "bold",
+              marginBottom: "0.75rem",
+              color: "#f87171", // red-400 for warning
+            }}
+          >
+            This action is not retrievable
+          </h3>
+          <p style={{ marginBottom: "1rem", fontSize: "0.9rem", opacity: 0.8 }}>
+            Clearing will permanently delete your code.
+          </p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
+            <button
+              onClick={() => {
+                clearCode();
+              }}
+              style={{
+                padding: "0.5rem 1.25rem",
+                background: "#dc2626", // red-600
+                color: "white",
+                borderRadius: "0.375rem",
+                fontWeight: "bold",
+              }}
+            >
+              Clear Code
+            </button>
+          </div>
+        </div>
+      </Popup>
+
+      <Popup
+        open={savePenPopup}
+        onClose={() => setSavePenPopup(false)}
+        modal
+        nested
+        lockScroll
+        contentStyle={{
+          background: "#1e1e1e",
+          color: "#f1f1f1",
+          borderRadius: "0.75rem",
+          padding: "1.5rem",
+          boxShadow: "0 8px 25px rgba(0,0,0,0.6)",
+          width: "400px",
+          maxWidth: "90%",
+        }}
+        overlayStyle={{
+          background: "rgba(0,0,0,0.7)",
+          backdropFilter: "blur(2px)",
+        }}
+      >
+        <div>
+          <h3
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: "bold",
+              marginBottom: "1rem",
+            }}
+          >
+            Save Pen
+          </h3>
+
+          {/* Title input */}
+          <input
+            type="text"
+            placeholder="Title"
+            value={penTitle}
+            onChange={(e) => setPenTitle(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "0.5rem",
+              marginBottom: "0.75rem",
+              borderRadius: "0.375rem",
+              border: "1px solid #444",
+              background: "#111",
+              color: "#f1f1f1",
+            }}
+          />
+
+          {/* Description input */}
+          <textarea
+            placeholder="Description"
+            value={penDescription}
+            onChange={(e) => setPenDescription(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "0.5rem",
+              height: "80px",
+              marginBottom: "1rem",
+              borderRadius: "0.375rem",
+              border: "1px solid #444",
+              background: "#111",
+              color: "#f1f1f1",
+              resize: "none",
+            }}
+          />
+
+          {/* Buttons */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "0.75rem",
+              marginTop: "1rem",
+            }}
+          >
+            <button
+              onClick={() => setSavePenPopup(false)}
+              style={{
+                padding: "0.5rem 1rem",
+                background: "#374151", // gray-700
+                color: "white",
+                borderRadius: "0.375rem",
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                savePen();
+                setSavePenPopup(false);
+              }}
+              style={{
+                padding: "0.5rem 1rem",
+                background: "#16a34a", // green-600
+                color: "white",
+                borderRadius: "0.375rem",
+                fontWeight: "bold",
+              }}
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </Popup>
+
       <div className="flex-1 w-full h-full flex flex-col min-h-0">
         {/* Toolbar */}
-        <div className="w-full h-10 flex justify-end items-center border-b border-gray-200 px-2 gap-2">
+        <div
+          className="w-full h-10 flex justify-end items-center border-b border-gray-200 px-2 gap-2 "
+          style={{
+            background: "rgb(39 40 34)",
+          }}
+        >
           <Button icon={<FeatherRefreshCw />} onClick={hardRefresh}>
             Refresh
           </Button>
@@ -344,6 +573,27 @@ function CodeEditor() {
             }}
           >
             Export
+          </Button>
+          <Button
+            variant="destructive-primary"
+            icon={<FeatherX />}
+            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+              event.preventDefault();
+              setClearCodePopup(true);
+            }}
+          >
+            Clear
+          </Button>
+
+          <Button
+            className="hover:border-success-700:hover hover:bg-success-700:hover bg-success-600 border-success-600"
+            icon={<FeatherSave />}
+            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+              event.preventDefault();
+              setSavePenPopup(true);
+            }}
+          >
+            Save
           </Button>
         </div>
 
