@@ -82,10 +82,6 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
               }
             )}
             src={image}
-            onError={(e) => {
-              console.log("hit!!");
-              e.currentTarget.src = "/default-profile.png"; // fallback
-            }}
           />
         ) : null}
       </div>
