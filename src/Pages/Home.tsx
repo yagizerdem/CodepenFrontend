@@ -17,20 +17,20 @@ import { motion } from "framer-motion";
 
 function HomePage() {
   const { setIsLoading, profile } = useAppContext();
-  const location = useLocation();
-  const isHome = location.pathname === "/home";
-
   const { isLoading: loggedInLoader } = useEnsureLoggedIn({
-    showErrorMessage: true,
+    showErrorMessage: false,
   });
   const { isLoading: profileLoader } = useEnsureProfileFetched({
-    showErrorMessage: true,
+    showErrorMessage: false,
   });
 
   useEffect(() => {
     const _isLoading = loggedInLoader || profileLoader;
     setIsLoading(_isLoading);
   }, [loggedInLoader, profileLoader, setIsLoading]);
+
+  const location = useLocation();
+  const isHome = location.pathname === "/home";
 
   return (
     <div className="w-screen h-screen  flex flex-row flex-1 ">

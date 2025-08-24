@@ -78,6 +78,7 @@ function Sidepanel() {
           variant="neutral-tertiary"
           icon={<FeatherHome />}
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
             navigation("/home");
           }}
         >
@@ -88,6 +89,7 @@ function Sidepanel() {
           variant="neutral-tertiary"
           icon={<FeatherPlusCircle />}
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
             navigation("/home/create-pen");
           }}
         >
@@ -98,6 +100,7 @@ function Sidepanel() {
           variant="neutral-tertiary"
           icon={<FeatherSearch />}
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault;
             navigation("/home/search-pen");
           }}
         >
@@ -108,6 +111,7 @@ function Sidepanel() {
           variant="neutral-tertiary"
           icon={<FeatherUsers />}
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
             navigation("/home/search-profile");
           }}
         >
@@ -119,7 +123,10 @@ function Sidepanel() {
           className="h-8 w-full flex-none"
           variant="neutral-tertiary"
           icon={<FeatherUser />}
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {}}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
+            navigation("/home/my-profile");
+          }}
         >
           Profile
         </Button>

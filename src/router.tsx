@@ -5,6 +5,7 @@ import { HomePage } from "./Pages/Home";
 import { CreatePenPage } from "./Pages/CreatePen";
 import { SearchProfilePage } from "./Pages/SearchProfile";
 import { SearchPenPage } from "./Pages/SearchPen";
+import { MyProfile } from "./Pages/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "search-pen",
         element: <SearchPenPage />,
+      },
+      {
+        path: "my-profile",
+        element: <MyProfile />,
       },
     ],
   },
