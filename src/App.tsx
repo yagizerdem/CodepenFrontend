@@ -15,6 +15,7 @@ function App() {
           <Spinner />
         </div>
       )}
+      <div className="flash"></div>
       <RouterProvider router={router} />
     </Fragment>
   );

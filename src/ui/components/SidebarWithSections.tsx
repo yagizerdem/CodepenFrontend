@@ -1,14 +1,12 @@
 "use client";
 /*
  * Documentation:
- * Avatar — https://app.subframe.com/16c8344fcf3d/library?component=Avatar_bec25ae6-5010-4485-b46b-cf79e3943ab2
- * Icon Button — https://app.subframe.com/16c8344fcf3d/library?component=Icon+Button_af9405b1-8c54-4e01-9786-5aad308224f6
  * Sidebar with sections — https://app.subframe.com/16c8344fcf3d/library?component=Sidebar+with+sections_f4047c8b-cfb4-4761-b9cf-fbcae8a9b9b5
  */
 
 import React from "react";
-import * as SubframeCore from "@subframe/core";
 import { FeatherCircleDashed } from "@subframe/core";
+import * as SubframeCore from "@subframe/core";
 import * as SubframeUtils from "../utils";
 
 interface NavItemProps extends React.HTMLAttributes<HTMLDivElement> {

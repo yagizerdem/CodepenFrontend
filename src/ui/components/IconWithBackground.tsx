@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import * as SubframeCore from "@subframe/core";
 import { FeatherCheck } from "@subframe/core";
+import * as SubframeCore from "@subframe/core";
 import * as SubframeUtils from "../utils";
 
 interface IconWithBackgroundRootProps
