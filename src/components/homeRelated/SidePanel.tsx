@@ -97,7 +97,9 @@ function Sidepanel() {
           className="h-8 w-full flex-none"
           variant="neutral-tertiary"
           icon={<FeatherSearch />}
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {}}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            navigation("/home/search-pen");
+          }}
         >
           Search Pens
         </Button>

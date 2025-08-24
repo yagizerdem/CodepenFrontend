@@ -154,7 +154,7 @@ function SearchProfilePage() {
         </div>
       </div>
 
-      <ul className="flex flex-1 overflow-y-scroll flex-col">
+      <ul className="flex flex-1 overflow-y-scroll flex-col ">
         {profiles.map((user) => (
           <UserListItem key={user.id} user={user} />
         ))}

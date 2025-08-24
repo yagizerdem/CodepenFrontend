@@ -5,11 +5,11 @@ import type { PenCommentEntity } from "./PenCommentEntity";
 import type { BaseEntity } from "./BaseEntity";
 
 export interface PenEntity extends BaseEntity {
-  HTML?: string;
-  CSS?: string;
-  JS?: string;
-  Title: string;
-  Description?: string;
+  html?: string;
+  css?: string;
+  js?: string;
+  title: string;
+  description?: string;
 
   authorId?: string;
   author: ApplicationUserEntity;
