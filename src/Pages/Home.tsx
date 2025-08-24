@@ -13,6 +13,7 @@ import {
   FeatherZap,
 } from "@subframe/core";
 import { flash } from "../utils/FlashEffect";
+import { motion } from "framer-motion";
 
 function HomePage() {
   const { setIsLoading, profile } = useAppContext();
@@ -34,7 +35,7 @@ function HomePage() {
   return (
     <div className="w-screen h-screen  flex flex-row flex-1 ">
       <Sidepanel />
-      <div className="flex-1">
+      <div className="flex-1 overflow-y-scroll">
         {isHome && <HomePageContent />}
         {!isHome && <Outlet />}
       </div>
@@ -140,8 +141,38 @@ function HomePageContent() {
           </div>
         </div>
       </div>
+      <ImageGallery />
     </div>
   );
 }
 
 export { HomePage };
+
+function FadeInImage({ src }: { src: string }) {
+  return (
+    <motion.img
+      src={src}
+      alt="Demo"
+      className="rounded-lg shadow-lg"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.3 }}
+    />
+  );
+}
+
+export default function ImageGallery() {
+  const images = Array.from({ length: 6 }).map(
+    (_, i) => `https://picsum.photos/600/40${i}`
+  );
+
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      {images.map((src, i) => (
+        <FadeInImage key={i} src={src} />
+      ))}
+    </div>
+  );
+}
