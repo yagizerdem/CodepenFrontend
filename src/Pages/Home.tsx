@@ -141,7 +141,10 @@ function HomePageContent() {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       <ImageGallery />
+=======
+>>>>>>> origin/main
     </div>
   );
 }
