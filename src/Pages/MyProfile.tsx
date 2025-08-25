@@ -3,6 +3,7 @@ import { MyProfileHeader } from "../components/ProfileRelated/MyProfileHeader";
 import { useEnsureLoggedIn } from "../hook/ensureLoggedIn";
 import { useEnsureProfileFetched } from "../hook/ensureProfileFetched";
 import { useAppContext } from "../context/AppContext";
+import { MyPens } from "../components/ProfileRelated/MyPens";
 
 function MyProfile() {
   const { setIsLoading, profile } = useAppContext();
@@ -19,8 +20,9 @@ function MyProfile() {
   }, [loggedInLoader, profileLoader, setIsLoading]);
 
   return (
-    <div className="flex flex-1  bg-[#272822] h-full w-full">
+    <div className="flex flex-1 flex-col  bg-[#272822] h-full w-full">
       <MyProfileHeader />
+      <MyPens />
     </div>
   );
 }

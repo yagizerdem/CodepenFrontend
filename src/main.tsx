@@ -4,13 +4,12 @@ import "./index.css";
 import "./flash.css";
 import "toastify-js/src/toastify.css";
 import "reactjs-popup/dist/index.css";
+import "@pqina/pintura/pintura.css";
 import App from "./App.tsx";
 import { AppProvider } from "./context/AppContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
-  </StrictMode>
+  <AppProvider>
+    <App />
+  </AppProvider>
 );

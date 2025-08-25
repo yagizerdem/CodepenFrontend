@@ -6,6 +6,7 @@ import { CreatePenPage } from "./Pages/CreatePen";
 import { SearchProfilePage } from "./Pages/SearchProfile";
 import { SearchPenPage } from "./Pages/SearchPen";
 import { MyProfile } from "./Pages/MyProfile";
+import { UpdatePen } from "./Pages/UpdatePen";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "my-profile",
         element: <MyProfile />,
+      },
+      {
+        path: "update-pen/:penId",
+        element: <UpdatePen />,
       },
     ],
   },
