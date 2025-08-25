@@ -8,6 +8,8 @@ import type { ApiResponse } from "../models/responsetype/ApiResponse";
 import { CodeEditor } from "../components/editorRelated/CodeEditor";
 import { ExportButton } from "../components/update-penRelated/ExportButton";
 import { ImportButton } from "../components/update-penRelated/ImportButton";
+import { UpdateButton } from "../components/update-penRelated/UpdateButton";
+import { MigrateButton } from "../components/update-penRelated/MigrateButton";
 
 function UpdatePen() {
   const { setIsLoading } = useAppContext();
@@ -28,7 +30,6 @@ function UpdatePen() {
         await API.get(`/pen/get-pen-byid/${id}`)
       ).data;
 
-      console.log(apiResponse);
       if (!apiResponse.data) {
         showErrorToast(apiResponse.message || "Failed to fetch pen");
         return;
@@ -39,6 +40,18 @@ function UpdatePen() {
       showErrorToast("unknown error occured");
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  function handleSuccessfulUpdate() {
+    if (penId) {
+      fetchPen(parseInt(penId));
+    }
+  }
+
+  function handleSuccessfulMigration() {
+    if (penId) {
+      fetchPen(parseInt(penId));
     }
   }
 
@@ -63,6 +76,11 @@ function UpdatePen() {
           setJsValue={(newJs) =>
             setPen((p) => (p ? { ...p, js: newJs as string } : p))
           }
+        />
+        <UpdateButton pen={pen} onSuccessfulUpdate={handleSuccessfulUpdate} />
+        <MigrateButton
+          pen={pen}
+          onSuccessfullMigration={handleSuccessfulMigration}
         />
       </div>
       <div className="flex-1 w-full h-full">
