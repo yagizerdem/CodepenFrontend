@@ -7,7 +7,7 @@ import { API } from "../../utils/API";
 import type { GetPensRespnose } from "../../models/responsetype/GetPensRespnose";
 import { PaginationIndicator } from "../common/PaginationIndicator";
 import { PenPreviewBox } from "../common/PenPreviewBox";
-import { FeatherDelete, FeatherEdit } from "@subframe/core";
+import { FeatherDelete, FeatherEdit, FeatherTag } from "@subframe/core";
 import { Button } from "../../ui";
 import Popup from "reactjs-popup";
 import { useNavigate } from "react-router";
@@ -172,9 +172,21 @@ function MyPens() {
               <div className="relative border border-solid border-gray-50 p-2 rounded-2xl w-96 ">
                 <div className="absolute top-0 right-0 w-full flex flex-row justify-end ">
                   <Button
+                    variant="neutral-tertiary"
+                    icon={<FeatherTag />}
+                    style={{
+                      background: "white",
+                    }}
+                    onMouseUp={(event: React.MouseEvent<HTMLButtonElement>) => {
+                      event.preventDefault();
+                      navigate(`/home/my-old-pens/${p.id}`);
+                    }}
+                  />
+                  <Button
                     className="hover:bg-success-700:hover bg-success-600 text-white mx-1"
                     icon={<FeatherEdit />}
-                    onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                    onMouseUp={(event: React.MouseEvent<HTMLButtonElement>) => {
+                      event.preventDefault();
                       navigate(`/home/update-pen/${p.id}`);
                     }}
                   ></Button>
@@ -182,6 +194,7 @@ function MyPens() {
                     className="hover:bg-success-700:hover bg-red-500 text-white mx-1"
                     icon={<FeatherDelete />}
                     onMouseUp={(event: React.MouseEvent<HTMLButtonElement>) => {
+                      event.preventDefault();
                       setTargetPen(p);
                       setShowDeletePenPopup(true);
                     }}
