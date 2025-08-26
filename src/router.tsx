@@ -8,6 +8,8 @@ import { SearchPenPage } from "./Pages/SearchPen";
 import { MyProfile } from "./Pages/MyProfile";
 import { UpdatePen } from "./Pages/UpdatePen";
 import { MyOldPenVersion } from "./Pages/MyOldPenVersion";
+import { DisplayPen } from "./Pages/DisplayPen";
+import { OhtersProfile } from "./Pages/OthersProfile";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
       {
         path: "my-old-pens/:penId",
         element: <MyOldPenVersion />,
+      },
+      {
+        path: "display-pen/:penId",
+        element: <DisplayPen />,
+      },
+      {
+        path: "/others-profile",
+        element: <OhtersProfile />,
       },
     ],
   },

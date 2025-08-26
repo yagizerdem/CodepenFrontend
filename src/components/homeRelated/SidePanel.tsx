@@ -1,5 +1,4 @@
 import React from "react";
-import { Avatar } from "../../ui/components/Avatar";
 import { Button } from "../../ui/components/Button";
 import { FeatherPlusCircle } from "@subframe/core";
 import { FeatherSearch } from "@subframe/core";

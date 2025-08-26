@@ -18,6 +18,7 @@ import { showErrorToast, showInfoToast } from "../utils/Toaster";
 import { PenPreviewBox } from "../components/common/PenPreviewBox";
 import ProfileImageContainer from "../components/common/ProfileImageContainer";
 import type { GetPensRespnose } from "../models/responsetype/GetPensRespnose";
+import { useNavigate } from "react-router";
 
 type SearchMode = "Title" | "Description" | "AuthorUserName";
 
@@ -31,6 +32,7 @@ function SearchPenPage() {
   const [pens, setPens] = useState<PenEntity[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalHits, setTotalHits] = useState<number>(1);
+  const navigation = useNavigate();
 
   useEffect(() => {
     if (query.trim()) {
@@ -192,8 +194,16 @@ function SearchPenPage() {
                 <p>Created: {new Date(pen.createdAt).toLocaleDateString()}</p>
                 <p>Updated: {new Date(pen.updatedAt).toLocaleDateString()}</p>
               </div>
-            </div>
 
+              <a
+                className="mt-4 inline-block text-sm text-blue-600 hover:underline cursor-pointer"
+                onMouseUp={() => {
+                  navigation(`/home/display-pen/${pen.id}`);
+                }}
+              >
+                Display Pen
+              </a>
+            </div>
             {/* Author Footer */}
             <div className="flex items-center gap-3 px-4 py-3 bg-gray-100 border-t">
               {/* Avatar placeholder */}
