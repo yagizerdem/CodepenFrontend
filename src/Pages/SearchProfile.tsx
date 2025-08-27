@@ -15,6 +15,7 @@ import SubframeCore, {
 import { DropdownMenu } from "../ui/components/DropdownMenu";
 import { Button } from "../ui";
 import ProfileImageContainer from "../components/common/ProfileImageContainer";
+import { useNavigate } from "react-router";
 
 type SearchMode = "UserName" | "FullName" | "Email";
 const limit = 50;
@@ -180,6 +181,8 @@ type Props = {
 };
 
 const UserListItem: React.FC<Props> = ({ user }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex items-center gap-4 p-4 border-b border-gray-200">
       <ProfileImageContainer
@@ -217,6 +220,17 @@ const UserListItem: React.FC<Props> = ({ user }) => {
         </p>
         <p className="text-sm text-gray-500 truncate">{user.email}</p>
       </div>
+
+      <Button
+        variant="brand-secondary"
+        icon={<FeatherUser />}
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+          event.preventDefault();
+          navigate(`/home/others-profile/${user.id}`);
+        }}
+      >
+        Profile
+      </Button>
     </div>
   );
 };

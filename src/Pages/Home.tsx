@@ -35,7 +35,7 @@ function HomePage() {
   return (
     <div className="w-screen h-screen  flex flex-row flex-1 ">
       <Sidepanel />
-      <div className="flex-1 overflow-y-scroll">
+      <div className="flex-1 ">
         {isHome && <HomePageContent />}
         {!isHome && <Outlet />}
       </div>

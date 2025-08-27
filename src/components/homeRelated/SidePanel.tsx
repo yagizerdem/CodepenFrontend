@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../ui/components/Button";
-import { FeatherPlusCircle } from "@subframe/core";
+import { FeatherMail, FeatherPlusCircle } from "@subframe/core";
 import { FeatherSearch } from "@subframe/core";
 import { FeatherUsers } from "@subframe/core";
 import { FeatherUser } from "@subframe/core";
@@ -133,7 +133,9 @@ function Sidepanel() {
           className="h-8 w-full flex-none"
           variant="neutral-tertiary"
           icon={<FeatherSettings />}
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {}}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
+          }}
         >
           Settings
         </Button>
@@ -146,6 +148,18 @@ function Sidepanel() {
           }}
         >
           Register
+        </Button>
+
+        <Button
+          className="h-8 w-full flex-none"
+          variant="neutral-tertiary"
+          icon={<FeatherMail />}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
+            navigation("/home/follow-request");
+          }}
+        >
+          Follow Requests
         </Button>
       </div>
       <Button

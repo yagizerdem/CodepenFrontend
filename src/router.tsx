@@ -9,7 +9,8 @@ import { MyProfile } from "./Pages/MyProfile";
 import { UpdatePen } from "./Pages/UpdatePen";
 import { MyOldPenVersion } from "./Pages/MyOldPenVersion";
 import { DisplayPen } from "./Pages/DisplayPen";
-import { OhtersProfile } from "./Pages/OthersProfile";
+import { OthersProfile } from "./Pages/OthersProfile";
+import { FollowRequestsPage } from "./Pages/FollowRequests";
 
 const router = createBrowserRouter([
   {
@@ -53,8 +54,12 @@ const router = createBrowserRouter([
         element: <DisplayPen />,
       },
       {
-        path: "/others-profile",
-        element: <OhtersProfile />,
+        path: "/home/others-profile/:userId",
+        element: <OthersProfile />,
+      },
+      {
+        path: "/home/follow-request",
+        element: <FollowRequestsPage />,
       },
     ],
   },

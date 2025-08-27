@@ -11,6 +11,7 @@ import { FeatherCheck, FeatherEdit2, FeatherX } from "@subframe/core";
 import { PinturaEditor } from "@pqina/react-pintura";
 import { getEditorDefaults } from "@pqina/pintura";
 import { flash } from "../../utils/FlashEffect";
+import { RelationIndicator } from "./RelationIndicator";
 
 function MyProfileHeader() {
   const { profile, setIsLoading, setProfile } = useAppContext();
@@ -265,6 +266,7 @@ function MyProfileHeader() {
           {email}
         </span>
       </div>
+      <RelationIndicator userId={profile?.id ?? ""} />
     </div>
   );
 }

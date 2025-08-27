@@ -208,8 +208,6 @@ function DisplayPen() {
     }
   }, [penId]);
 
-  console.log(comments);
-
   return (
     <Fragment>
       <Popup
