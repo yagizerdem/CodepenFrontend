@@ -11,6 +11,7 @@ import { MyOldPenVersion } from "./Pages/MyOldPenVersion";
 import { DisplayPen } from "./Pages/DisplayPen";
 import { OthersProfile } from "./Pages/OthersProfile";
 import { FollowRequestsPage } from "./Pages/FollowRequests";
+import { CreateArticlePage } from "./Pages/CreateArticle";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/home/follow-request",
         element: <FollowRequestsPage />,
+      },
+      {
+        path: "/home/create-article",
+        element: <CreateArticlePage />,
       },
     ],
   },

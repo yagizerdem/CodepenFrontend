@@ -80,19 +80,17 @@ function CodeEditor({
     }, TIME_LIMIT);
   }
 
-  function addLoopGuards(code: string, maxMs = 800) {
+  function addLoopGuards(code: string) {
     const header = `
-      const __deadline = Date.now() + ${maxMs};
-      function __guard(){ if (Date.now() > __deadline) { throw new Error("Time limit exceeded"); } }
-    `;
+    function __guard(){ throw new Error("Infinite loop detected"); }
+  `;
 
-    // regex’ler düzeltilmiş (gereksiz kaçış yok)
-    const guarded = code
-      .replace(/for\s*\([^)]*\)\s*\{/g, (m) => m + "\n__guard();")
-      .replace(/while\s*\([^)]*\)\s*\{/g, (m) => m + "\n__guard();")
-      .replace(/do\s*\{/g, (m) => m + "\n__guard();");
-
-    return `${header}\ntry {\n${guarded}\n} catch (e) { console.error(e && e.message ? e.message : e); }`;
+    return `${header}\ntry {\n${
+      code
+        .replace(/for\s*\(\s*;\s*;\s*\)\s*\{/g, (m) => m + "\n__guard();")
+        .replace(/while\s*\(\s*true\s*\)\s*\{/g, (m) => m + "\n__guard();")
+        .replace(/do\s*\{/g, (m) => m + "\n__guard();\n}") // sadece sonsuz do-while
+    }\n} catch (e) { console.error(e); }`;
   }
 
   function buildSrcDoc({

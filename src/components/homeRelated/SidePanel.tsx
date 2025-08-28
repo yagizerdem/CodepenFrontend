@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../ui/components/Button";
-import { FeatherMail, FeatherPlusCircle } from "@subframe/core";
+import { FeatherMail, FeatherPen, FeatherPlusCircle } from "@subframe/core";
 import { FeatherSearch } from "@subframe/core";
 import { FeatherUsers } from "@subframe/core";
 import { FeatherUser } from "@subframe/core";
@@ -160,6 +160,18 @@ function Sidepanel() {
           }}
         >
           Follow Requests
+        </Button>
+
+        <Button
+          className="h-8 w-full flex-none"
+          variant="neutral-tertiary"
+          icon={<FeatherPen />}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
+            navigation("/home/create-article");
+          }}
+        >
+          Create Article
         </Button>
       </div>
       <Button
