@@ -12,6 +12,11 @@ import { DisplayPen } from "./Pages/DisplayPen";
 import { OthersProfile } from "./Pages/OthersProfile";
 import { FollowRequestsPage } from "./Pages/FollowRequests";
 import { CreateArticlePage } from "./Pages/CreateArticle";
+import { DiscoverArticlesPage } from "./Pages/DiscoverArticles";
+import { DisplayArticle } from "./Pages/DisplayArticle";
+import { Bookmarks } from "./Pages/Bookmarks";
+import { ChatPage } from "./Pages/ChatPage";
+import { ChatProvider } from "./context/ChatContext";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +70,26 @@ const router = createBrowserRouter([
       {
         path: "/home/create-article",
         element: <CreateArticlePage />,
+      },
+      {
+        path: "/home/discover-articles",
+        element: <DiscoverArticlesPage />,
+      },
+      {
+        path: "/home/display-article/:articleId",
+        element: <DisplayArticle />,
+      },
+      {
+        path: "/home/bookmarks",
+        element: <Bookmarks />,
+      },
+      {
+        path: "/home/chat",
+        element: (
+          <ChatProvider>
+            <ChatPage />
+          </ChatProvider>
+        ),
       },
     ],
   },

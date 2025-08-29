@@ -1,6 +1,12 @@
 import React from "react";
 import { Button } from "../../ui/components/Button";
-import { FeatherMail, FeatherPen, FeatherPlusCircle } from "@subframe/core";
+import {
+  FeatherBookMarked,
+  FeatherMail,
+  FeatherPen,
+  FeatherPlusCircle,
+  FeatherText,
+} from "@subframe/core";
 import { FeatherSearch } from "@subframe/core";
 import { FeatherUsers } from "@subframe/core";
 import { FeatherUser } from "@subframe/core";
@@ -99,7 +105,7 @@ function Sidepanel() {
           variant="neutral-tertiary"
           icon={<FeatherSearch />}
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-            event.preventDefault;
+            event.preventDefault();
             navigation("/home/search-pen");
           }}
         >
@@ -172,6 +178,41 @@ function Sidepanel() {
           }}
         >
           Create Article
+        </Button>
+
+        <Button
+          className="h-8 w-full flex-none"
+          variant="neutral-tertiary"
+          icon={<FeatherSearch />}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
+            navigation("/home/discover-articles");
+          }}
+        >
+          Discover Articles
+        </Button>
+        <Button
+          className="h-8 w-full flex-none"
+          variant="neutral-tertiary"
+          icon={<FeatherBookMarked />}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
+            navigation("/home/bookmarks");
+          }}
+        >
+          Bookmarks
+        </Button>
+
+        <Button
+          className="h-8 w-full flex-none"
+          variant="neutral-tertiary"
+          icon={<FeatherText />}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
+            navigation("/home/chat");
+          }}
+        >
+          Chat
         </Button>
       </div>
       <Button

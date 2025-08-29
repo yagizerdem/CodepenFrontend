@@ -8,6 +8,7 @@ export interface ArticleEntity {
 
   title: string; // Min 2, Max 100
   fullText: string; // Max 100000
+  abstract: string; // Max 500
   authorId: string;
   author: ApplicationUserEntity;
   plannedPublishDate: string; // ISO string, must be future date

@@ -18,6 +18,7 @@ function CreateArticlePage() {
   const todayISO = new Date().toISOString().split("T")[0];
   const [date, setDate] = useState<Date[]>([new Date(todayISO)]);
   const [title, setTitle] = useState<string>("");
+  const [abstract, setAbstract] = useState<string>("");
   const [fullText, setFullText] = useState<string>("");
   const [visibility, setVisibility] = useState<number>();
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
@@ -75,6 +76,7 @@ function CreateArticlePage() {
       formData.append("FullText", fullText.trim());
       formData.append("PlannedPublishDate", date[0].toISOString());
       formData.append("Visibility", visibility?.toString().trim() || "");
+      formData.append("Abstract", abstract.trim());
       if (coverImageFile) {
         formData.append("CoverImage", coverImageFile);
       }
@@ -123,17 +125,31 @@ function CreateArticlePage() {
             />
           </div>
 
+          {/* abstract */}
+          <div className="flex flex-col my-4">
+            <h1 className="text-white font-bold text-sm">Abstract</h1>
+            <textarea
+              placeholder="Abstract"
+              className="h-32 p-2 border bg-gray-200 border-gray-300 rounded"
+              value={abstract}
+              onChange={(e) => setAbstract(e.target.value)}
+            />
+          </div>
+
           {/* editor */}
-          <Editor
-            apiKey="in76kvx2smk1xtrhes6e6yz51o145c07xj56z6wb859z17n7"
-            init={{
-              plugins:
-                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-              toolbar:
-                "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-            }}
-            onEditorChange={(content) => setFullText(content)}
-          />
+          <div>
+            <div className="text-sm font-bold text-white">Full Text </div>
+            <Editor
+              apiKey="in76kvx2smk1xtrhes6e6yz51o145c07xj56z6wb859z17n7"
+              init={{
+                plugins:
+                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+                toolbar:
+                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+              }}
+              onEditorChange={(content) => setFullText(content)}
+            />
+          </div>
 
           {/* date picker */}
           <div className="my-4">
