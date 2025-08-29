@@ -68,7 +68,7 @@ interface FollowersListProps {
 }
 
 function UserList({ users }: FollowersListProps) {
-  const { setTargetProfile } = useChatContext();
+  const { setTargetProfile, setChatMessages } = useChatContext();
 
   return (
     <ul className="space-y-3 w-full flex flex-col flex-1 h-full ">
@@ -107,7 +107,10 @@ function UserList({ users }: FollowersListProps) {
               {follower.email ?? "no-email"}
             </p>
             <span
-              onMouseUp={() => setTargetProfile(follower)}
+              onMouseUp={() => {
+                setTargetProfile(follower);
+                setChatMessages([]); // refresh
+              }}
               className="text-blue-200 cursor-pointer underline underline-offset-8 text-sm hover:text-blue-300"
             >
               select profile

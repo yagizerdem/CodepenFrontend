@@ -2,13 +2,24 @@ import { Fragment } from "react/jsx-runtime";
 import { useChatContext } from "../../context/ChatContext";
 import ProfileImageContainer from "../common/ProfileImageContainer";
 import { Button } from "../../ui";
-import { FeatherSend } from "@subframe/core";
-import React from "react";
+import { FeatherMoreHorizontal, FeatherSend } from "@subframe/core";
+import React, { useEffect, useState } from "react";
+import { useAppContext } from "../../context/AppContext";
+import type { PrivateChatMessageEntity } from "../../models/entity/PrivateChatMessageEntity";
+import type { ApiResponse } from "../../models/responsetype/ApiResponse";
+import { API } from "../../utils/API";
 
 function ChatPanel() {
   const { targetProfile } = useChatContext();
 
-  console.log(targetProfile);
+  if (targetProfile == null)
+    return (
+      <div className="flex-1 w-full  items-center justify-center h-full flex flex-col  bg-gray-800">
+        <div className="text-white font-bold text-2xl">
+          Select a user to chat with
+        </div>
+      </div>
+    );
 
   return (
     <Fragment>
@@ -19,7 +30,7 @@ function ChatPanel() {
         <div className="flex w-full h-16">
           <Header />
         </div>
-        <div className="flex-1 w-full ">
+        <div className="flex-1 w-full overflow-y-auto">
           <ContextPanel />
         </div>
         <div className="flex w-full h-16 bg-gray-800 items-center align-middle">
@@ -75,8 +86,86 @@ function Header() {
   );
 }
 
+// chat messages here
 function ContextPanel() {
-  return <div className="flex flex-1 w-full h-full bg-gray-900"></div>;
+  const { profile } = useAppContext();
+  const { chatMessages, targetProfile, setChatMessages } = useChatContext();
+  const limit = 100;
+  const [hasFullyFetched, setHasFullyFetched] = useState(false);
+
+  useEffect(() => {
+    if (targetProfile) {
+      fetchMessages();
+    }
+  }, [targetProfile]);
+
+  async function fetchMessages() {
+    try {
+      const offset = chatMessages.length;
+
+      const apiRResponse: ApiResponse<PrivateChatMessageEntity[]> = (
+        await API.get(
+          `/privatechat/my-messages?offset=${offset}&limit=${limit}&targetUserId=${targetProfile?.id}`
+        )
+      ).data;
+
+      console.log(apiRResponse);
+
+      if (!apiRResponse.success) {
+        return;
+      }
+
+      setHasFullyFetched(apiRResponse.data.length < limit);
+
+      setChatMessages((prev) => [...prev, ...apiRResponse.data]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return (
+    <div className="overflow-y-auto flex flex-col flex-1 w-full h-full bg-gray-900 p-4 space-y-2 ">
+      {chatMessages.map((msg) => {
+        const isMine = msg.senderId === profile?.id;
+        const isTarget = msg.senderId === targetProfile?.id;
+
+        return (
+          <div
+            key={msg.id}
+            className={`flex w-full ${
+              isMine ? "justify-end" : "justify-start"
+            }`}
+          >
+            <div
+              className={`max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-2xl shadow-md break-words ${
+                isMine
+                  ? "bg-green-600 text-white rounded-br-none"
+                  : isTarget
+                  ? "bg-blue-600 text-white rounded-bl-none"
+                  : "bg-gray-700 text-gray-200"
+              }`}
+            >
+              <div className="text-sm">{msg.message}</div>
+            </div>
+          </div>
+        );
+      })}
+
+      {!hasFullyFetched && (
+        <div className="w-fit mx-auto">
+          <Button
+            icon={<FeatherMoreHorizontal />}
+            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+              event.preventDefault();
+              fetchMessages();
+            }}
+          >
+            Load More
+          </Button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function Footer() {
@@ -86,8 +175,6 @@ function Footer() {
   async function sendMessage() {
     try {
       if (!connection) return;
-
-      console.log("send message : ", message, targetProfile);
 
       await connection.invoke("SendMessage", targetProfile?.id, message);
     } catch (err) {

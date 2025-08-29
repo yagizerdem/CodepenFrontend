@@ -11,6 +11,7 @@ import type { ApplicationUserEntity } from "../models/entity/ApplicationUserEnti
 import type { ApiResponse } from "../models/responsetype/ApiResponse";
 import { showErrorToast } from "../utils/Toaster";
 import { API } from "../utils/API";
+import type { PrivateChatMessageEntity } from "../models/entity/PrivateChatMessageEntity";
 
 interface ChatContextType {
   connection: signalR.HubConnection | null;
@@ -26,6 +27,10 @@ interface ChatContextType {
   targetProfile: ApplicationUserEntity | null;
   setTargetProfile: React.Dispatch<
     React.SetStateAction<ApplicationUserEntity | null>
+  >;
+  chatMessages: PrivateChatMessageEntity[];
+  setChatMessages: React.Dispatch<
+    React.SetStateAction<PrivateChatMessageEntity[]>
   >;
 }
 
@@ -56,6 +61,11 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [userListPanelMode, setUserListPanelMode] =
     useState<UserListPanelMode>("followers");
 
+  const [chatMessages, setChatMessages] = useState<PrivateChatMessageEntity[]>(
+    []
+  );
+
+  // signal r client setup
   useEffect(() => {
     const connect = async () => {
       const wsUrl = import.meta.env.VITE_WS_BASE_URL as string;
@@ -75,10 +85,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         setIsConnected(false);
       });
 
-      hub.on("ReceiveMessage", (from: string, text: string) => {
-        console.log("Message received from ", from, ": ", text);
-      });
-
       try {
         await hub.start();
         console.log("SignalR connected");
@@ -96,6 +102,26 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  // handle incoming messages
+  useEffect(() => {
+    if (!connection) return;
+
+    const handler = (chatMessage: PrivateChatMessageEntity) => {
+      if (
+        chatMessage.senderId === targetProfile?.id ||
+        chatMessage.senderId === profile?.id
+      ) {
+        setChatMessages((prev) => [...prev, chatMessage]);
+      }
+    };
+
+    connection.on("ReceiveMessage", handler);
+    return () => {
+      connection.off("ReceiveMessage", handler);
+    };
+  }, [connection, profile?.id, targetProfile?.id]);
+
+  //initial users load
   useEffect(() => {
     // followrers
     fetchFollowers();
@@ -104,6 +130,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     fetchFollowing();
   }, [profile?.id]);
 
+  // network related helpers
   async function fetchFollowers() {
     try {
       if (!profile?.id) return;
@@ -171,6 +198,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         followingPage,
         targetProfile,
         setTargetProfile,
+        chatMessages,
+        setChatMessages,
       }}
     >
       {children}
